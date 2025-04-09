@@ -184,17 +184,17 @@ void ButtonISR(void) {
         //DataFlag = 1;
     }
 
-    if (presses & 2) { // EK-TM4C1294XL button 3 pressed
-        fifo_put(3);
+    if (presses & 2) { // EK-TM4C1294XL USR_SW2          
+        fifo_put(3); //triggerType
     }
 
 
-    if (presses & 4) { // EK-TM4C1294XL button 3 pressed
-        fifo_put(1);
+    if (presses & 4) { // EK-TM4C1294XL S1 (J4.33) 
+        fifo_put(1); //voltsPerDiv
     }
 
     if (presses & 8) { // EK-TM4C1294XL button 4 pressed
-        fifo_put(2);
+        fifo_put(2); //timePerDiv
     }
 
 

@@ -41,14 +41,21 @@ volatile uint16_t Data_Buffer[128];
 uint32_t DataFlag = 0;
 extern volatile uint16_t gADCBuffer[ADC_BUFFER_SIZE];
 extern volatile int32_t gADCBufferIndex;
-extern uint32_t OpFlag;
+
+// extern uint32_t OpFlag;
+//Default for Osciloscope 
 volatile int triggerType = 0;
-volatile int voltsPerDiv = 3;
+volatile int voltsPerDiv = 3; //index of voltage scale
+volatile int timePerDiv = 0; //index of time div
+
 float cpu_load = 0.0;
 extern uint32_t count_unloaded;
 uint32_t count_loaded = 0;
+
 extern volatile int fifo_head;
 extern volatile int fifo_tail;
+
+const char * const gTimeScaleStr[] = {"100 ms", "50 ms", "20 ms", "10 ms", "5 ms", "2 ms", "1 ms", "500 us", "200 us", "100 us", "50 us", "20 us"};
 
 //Test Test
 
@@ -112,14 +119,24 @@ int main(void)
 
         if (fifo_head != fifo_tail){
             int op;
+
             fifo_get(&op);
             if (op == 3) {
-                triggerType = triggerType ^ 1;
+                triggerType != triggerType; //toggle between rising and falling
+
             } else if (op == 1) {
+                //adjust volt scale
                 if (voltsPerDiv == 4) {
                     voltsPerDiv = 0;
                 } else {
                     voltsPerDiv++;
+                }
+            } else if (op == 4){
+                //adjust time scale
+                if(timePerDiv == sizeof(gTimeScaleStr[])){
+                    timePerDiv = 0;
+                } else {
+                    timePerDiv ++;
                 }
             }
         }
