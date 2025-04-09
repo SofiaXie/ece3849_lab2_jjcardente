@@ -86,7 +86,7 @@ void ADC_ISR(void) {
  * 100 us / 20 samples = 1 sample every 5 us
  * 50 us / 20 samples = 1 sample every 2.5 us
  * 20 us / 20 samples = 1 sample every 1 us
- *
+ * This is just a further test
  *
  * */
 
