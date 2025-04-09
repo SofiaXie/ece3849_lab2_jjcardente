@@ -47,6 +47,8 @@ volatile int voltsPerDiv = 3;
 float cpu_load = 0.0;
 extern uint32_t count_unloaded;
 uint32_t count_loaded = 0;
+extern volatile int fifo_head;
+extern volatile int fifo_tail;
 
 //Test Test
 
@@ -104,8 +106,11 @@ int main(void)
         plot_data(&sContext, Data_Buffer, &rectFullScreen);
         GrFlush(&sContext); // flush the frame buffer to the LCD
 
-        if (OpFlag == 1) {
-            OpFlag = 0;
+
+        //if (OpFlag == 1) {
+        //    OpFlag = 0;
+
+        if (fifo_head != fifo_tail){
             int op;
             fifo_get(&op);
             if (op == 3) {

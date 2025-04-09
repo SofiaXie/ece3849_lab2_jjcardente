@@ -186,18 +186,15 @@ void ButtonISR(void) {
 
     if (presses & 2) { // EK-TM4C1294XL button 3 pressed
         fifo_put(3);
-        OpFlag = 1;
     }
 
 
     if (presses & 4) { // EK-TM4C1294XL button 3 pressed
         fifo_put(1);
-        OpFlag = 1;
     }
 
     if (presses & 8) { // EK-TM4C1294XL button 4 pressed
         fifo_put(2);
-        OpFlag = 1;
     }
 
 
