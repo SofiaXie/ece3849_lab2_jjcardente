@@ -16,15 +16,13 @@
 #include "driverlib/timer.h"
 
 uint32_t count_unloaded = 0;
-extern uint32_t gSystemClock;
 
 void init_CPU_Measure(void) {
 
     SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER3);
       TimerDisable(TIMER3_BASE, TIMER_BOTH);
       TimerConfigure(TIMER3_BASE, TIMER_CFG_ONE_SHOT);
-      TimerLoadSet(TIMER3_BASE, TIMER_A, gSystemClock - 1); // 1 sec interval
-
+      TimerLoadSet(TIMER3_BASE, TIMER_A, 1200000); // 1 sec interval
       count_unloaded = cpu_load_count();
 
 }

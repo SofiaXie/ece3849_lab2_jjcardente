@@ -35,10 +35,8 @@ void init_ADC1(){
     // ADC clock
     uint32_t pll_frequency = SysCtlFrequencyGet(CRYSTAL_FREQUENCY);
     uint32_t pll_divisor = (pll_frequency - 1) / (16 * ADC_SAMPLING_RATE) + 1; // round up
-    ADCClockConfigSet(ADC0_BASE, ADC_CLOCK_SRC_PLL | ADC_CLOCK_RATE_FULL,
-    pll_divisor);
-    ADCClockConfigSet(ADC1_BASE, ADC_CLOCK_SRC_PLL | ADC_CLOCK_RATE_FULL,
-    pll_divisor);
+    ADCClockConfigSet(ADC0_BASE, ADC_CLOCK_SRC_PLL | ADC_CLOCK_RATE_FULL, pll_divisor);
+    ADCClockConfigSet(ADC1_BASE, ADC_CLOCK_SRC_PLL | ADC_CLOCK_RATE_FULL, pll_divisor);
     // choose ADC1 sequence 0; disable before configuring
     ADCSequenceDisable(ADC1_BASE, 0);
     ADCSequenceConfigure(ADC1_BASE, 0, ADC_TRIGGER_ALWAYS, 0); // specify the "Always" trigger
@@ -69,5 +67,27 @@ void ADC_ISR(void) {
     gADCBuffer[gADCBufferIndex] = ADC1_SSFIFO0_R;
 
 }
+
+
+/* SOME BRIEF MATHEMATICS
+ *
+ * 20 pixels per division, meaning 20 samples per division
+ *
+ *
+ * 100 ms / 20 Samples = 1 sample every 5 ms
+ * 50 ms / 20 samples = 1 sample every 2.5 ms
+ * 20 ms / 20 samples = 1 sample per ms
+ * 10 ms / 20 samples = 1 sample every 500 us
+ * 5 ms / 20 samples = 1 sample every 250 us
+ * 2 ms / 20 samples = 1 sample every 100 us
+ * 1 ms / 20 samples = 1 sample every 50 us
+ * 500 us / 20 samples = 1 sample every 25 us
+ * 200 us / 20 samples = 1 sample every 10 us
+ * 100 us / 20 samples = 1 sample every 5 us
+ * 50 us / 20 samples = 1 sample every 2.5 us
+ * 20 us / 20 samples = 1 sample every 1 us
+ *
+ *
+ * */
 
 
